@@ -111,6 +111,20 @@ class acf_field_mapbox_geojson extends acf_field {
             'prepend'       => 'px',
         ));
 
+        acf_render_field_setting( $field, array(
+            'label'         => __('Default Latitude','acf-mapbox_geojson'),
+            'instructions'  => __('For new entries, load the following latitude.','acf-mapbox_geojson'),
+            'type'          => 'number',
+            'name'          => 'lat',
+        ));
+
+        acf_render_field_setting( $field, array(
+            'label'         => __('Default Longitude','acf-mapbox_geojson'),
+            'instructions'  => __('For new entries, load the following longitude.','acf-mapbox_geojson'),
+            'type'          => 'number',
+            'name'          => 'long',
+        ));
+
     }
 
 
@@ -141,6 +155,10 @@ class acf_field_mapbox_geojson extends acf_field {
         /*echo '<pre>';
             print_r( $field );
         echo '</pre>';*/
+        
+        if(!$field['value']) {
+	        $field['value'] = $field['defaultgeojson'];
+        }
 
 
         /*
@@ -150,7 +168,7 @@ class acf_field_mapbox_geojson extends acf_field {
         ?>
         <input class="mapbox-geojson-field" type="hidden" name="<?php echo esc_attr($field['name']) ?>" value='<?php echo $field['value'] ?>' />
         <div class="mapbox-geojson-map-container">
-            <div class="mapbox-geojson-map" data-access-token="<?php echo esc_attr($field['mapbox_access_token']) ?>" data-map-id="<?php echo esc_attr($field['mapbox_map_id']) ?>" style="height:<?php echo $field['height'] ?>px;"></div>
+            <div class="mapbox-geojson-map" data-access-token="<?php echo esc_attr($field['mapbox_access_token']) ?>" data-map-id="<?php echo esc_attr($field['mapbox_map_id']) ?>" data-lat="<?php echo esc_attr($field['lat']) ?>"  data-long="<?php echo esc_attr($field['long']) ?>" style="height:<?php echo $field['height'] ?>px;"></div>
             <div class="mbgs">
                 <span class="mbgs-toggle">
                     <span class="dashicons dashicons-arrow-left"></span>
@@ -181,10 +199,10 @@ class acf_field_mapbox_geojson extends acf_field {
         $dir = plugin_dir_url( __FILE__ );
 
         // register & include JS
-        wp_register_script( 'acf-input-mapbox_geojson_mapbox_js', 'https://api.tiles.mapbox.com/mapbox.js/v2.1.8/mapbox.js' );
+        wp_register_script( 'acf-input-mapbox_geojson_mapbox_js', 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js' );
         wp_enqueue_script( 'acf-input-mapbox_geojson_mapbox_js' );
 
-        wp_register_script( 'acf-input-mapbox_geojson_leaflet_draw_js', 'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.js', array('acf-input-mapbox_geojson_mapbox_js') );
+        wp_register_script( 'acf-input-mapbox_geojson_leaflet_draw_js', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js', array('acf-input-mapbox_geojson_mapbox_js') );
         wp_enqueue_script( 'acf-input-mapbox_geojson_leaflet_draw_js' );
 
         wp_register_script( 'acf-input-mapbox_geojson', "{$dir}js/input.js", array('acf-input-mapbox_geojson_mapbox_js', 'acf-input-mapbox_geojson_leaflet_draw_js'), '0.0.3', true );
@@ -192,14 +210,14 @@ class acf_field_mapbox_geojson extends acf_field {
 
 
         // register & include CSS
-        wp_register_style( 'acf-input-mapbox_geojson', "{$dir}css/input.css", array(), '0.0.3' );
-        wp_enqueue_style( 'acf-input-mapbox_geojson' );
-
-        wp_register_style( 'acf-input-mapbox_geojson_mapbox_css', 'https://api.tiles.mapbox.com/mapbox.js/v2.1.8/mapbox.css' );
+        wp_register_style( 'acf-input-mapbox_geojson_mapbox_css', 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' );
         wp_enqueue_style( 'acf-input-mapbox_geojson_mapbox_css' );
 
-        wp_register_style( 'acf-input-mapbox_geojson_leaflet_draw_css', 'https://api.tiles.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.2/leaflet.draw.css' );
+        wp_register_style( 'acf-input-mapbox_geojson_leaflet_draw_css', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.css' );
         wp_enqueue_style( 'acf-input-mapbox_geojson_leaflet_draw_css' );
+        
+        wp_register_style( 'acf-input-mapbox_geojson', "{$dir}css/input.css", array(), '0.0.3' );
+        wp_enqueue_style( 'acf-input-mapbox_geojson' );
 
     }
 

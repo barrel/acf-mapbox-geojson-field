@@ -36,7 +36,7 @@
                 map.fitBounds(editableLayer.getBounds());
             }
             else {
-                map.setView([0, 0], 1);
+                map.setView([mapDOM.attr('data-lat'), mapDOM.attr('data-long')], 14);
             }
 
             var drawControl = new L.Control.Draw({
