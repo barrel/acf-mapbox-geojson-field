@@ -122,6 +122,42 @@ class acf_field_mapbox_geojson extends acf_field {
         ?>
     </td>
 </tr>
+
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+    <td class="label">
+        <label><?php _e("Default Latitude",'acf'); ?></label>
+        <p class="description"><?php _e("For new entries, load the following latitude",'acf'); ?></p>
+    </td>
+    <td>
+        <?php
+
+        do_action('acf/create_field', array(
+            'type'      =>  'number',
+            'name'      =>  'fields['.$key.'][lat]',
+            'value'     =>  $field['lat'],
+        ));
+
+        ?>
+    </td>
+</tr>
+
+<tr class="field_option field_option_<?php echo $this->name; ?>">
+    <td class="label">
+        <label><?php _e("Default Longitude",'acf'); ?></label>
+        <p class="description"><?php _e("For new entries, load the following longitude",'acf'); ?></p>
+    </td>
+    <td>
+        <?php
+
+        do_action('acf/create_field', array(
+            'type'      =>  'number',
+            'name'      =>  'fields['.$key.'][long]',
+            'value'     =>  $field['long'],
+        ));
+
+        ?>
+    </td>
+</tr>
         <?php
 
     }

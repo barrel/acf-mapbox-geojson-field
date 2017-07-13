@@ -97,13 +97,6 @@ class acf_field_mapbox_geojson extends acf_field {
         ));
 
         acf_render_field_setting( $field, array(
-            'label'         => __('Map ID','acf-mapbox_geojson'),
-            'instructions'  => __('ID of you map project, you can find it at <a href="https://www.mapbox.com/projects/" target="_blank">https://www.mapbox.com/projects/</a>','acf-mapbox_geojson'),
-            'type'          => 'text',
-            'name'          => 'mapbox_map_id',
-        ));
-
-        acf_render_field_setting( $field, array(
             'label'         => __('Height','acf-mapbox_geojson'),
             'instructions'  => __('Height of the map','acf-mapbox_geojson'),
             'type'          => 'number',
@@ -199,22 +192,22 @@ class acf_field_mapbox_geojson extends acf_field {
         $dir = plugin_dir_url( __FILE__ );
 
         // register & include JS
-        wp_register_script( 'acf-input-mapbox_geojson_mapbox_js', 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.js' );
+        wp_register_script( 'acf-input-mapbox_geojson_mapbox_js', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js' );
         wp_enqueue_script( 'acf-input-mapbox_geojson_mapbox_js' );
 
-        wp_register_script( 'acf-input-mapbox_geojson_leaflet_draw_js', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.js', array('acf-input-mapbox_geojson_mapbox_js') );
-        wp_enqueue_script( 'acf-input-mapbox_geojson_leaflet_draw_js' );
+        wp_register_script( 'acf-input-mapbox_geojson_geocoder_js', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.min.js', array('acf-input-mapbox_geojson_mapbox_js') );
+        wp_enqueue_script( 'acf-input-mapbox_geojson_geocoder_js' );
 
-        wp_register_script( 'acf-input-mapbox_geojson', "{$dir}js/input.js", array('acf-input-mapbox_geojson_mapbox_js', 'acf-input-mapbox_geojson_leaflet_draw_js'), '0.0.3', true );
+        wp_register_script( 'acf-input-mapbox_geojson', "{$dir}js/input.js", array('acf-input-mapbox_geojson_mapbox_js', 'acf-input-mapbox_geojson_geocoder_js'), '0.0.3', true );
         wp_enqueue_script( 'acf-input-mapbox_geojson' );
 
 
         // register & include CSS
-        wp_register_style( 'acf-input-mapbox_geojson_mapbox_css', 'https://api.mapbox.com/mapbox.js/v3.0.1/mapbox.css' );
+        wp_register_style( 'acf-input-mapbox_geojson_mapbox_css', 'https://api.tiles.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' );
         wp_enqueue_style( 'acf-input-mapbox_geojson_mapbox_css' );
 
-        wp_register_style( 'acf-input-mapbox_geojson_leaflet_draw_css', 'https://api.mapbox.com/mapbox.js/plugins/leaflet-draw/v0.2.3/leaflet.draw.css' );
-        wp_enqueue_style( 'acf-input-mapbox_geojson_leaflet_draw_css' );
+        wp_register_style( 'acf-input-mapbox_geojson_geocoder_css', 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.1.0/mapbox-gl-geocoder.css' );
+        wp_enqueue_style( 'acf-input-mapbox_geojson_geocoder_css' );
         
         wp_register_style( 'acf-input-mapbox_geojson', "{$dir}css/input.css", array(), '0.0.3' );
         wp_enqueue_style( 'acf-input-mapbox_geojson' );
